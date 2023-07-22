@@ -23,37 +23,44 @@ export default function Home() {
     }
   };
 
-  return (
-    <main className="flex min-h-screen items-stretch p-0 m-0 latin">
-      {/* Side Navigation Bar */}
-      <div className="h-screen flex flex-col items-center justify-start space-y-4 p-4 bg-gray-200 w-40">
-        <h2 className="text-xl font-bold text-black">NewWarden</h2>
-        <button
-          onClick={() => handleNavItemClick("stats")}
-          className={`w-full text-blue-500 px-4 py-2 rounded-md ${
-            selectedNavItem === "stats" ? "bg-blue-200" : ""
-          }`}
-        >
-          Stats
-        </button>
-        <button
-          onClick={() => handleNavItemClick("add_child")}
-          className={`w-full text-blue-500 px-4 py-2 rounded-md ${
-            selectedNavItem === "add_child" ? "bg-blue-200" : ""
-          }`}
-        >
-          Add Child
-        </button>
-        <button
-          onClick={() => handleNavItemClick("settings")}
-          className={`w-full text-blue-500 px-4 py-2 rounded-md ${
-            selectedNavItem === "settings" ? "bg-blue-200" : ""
-          }`}
-        >
-          Settings
-        </button>
-        {/* Add more menu items as needed */}
-      </div>
+    // State to keep track of the intensity value
+    const [intensity, setIntensity] = useState(40);
+
+    // Function to handle intensity change
+    const handleIntensityChange = (event) => {
+      setIntensity(event.target.value);
+    };
+  
+    // Function to handle form submission
+    const handleSubmit = () => {
+      // You can perform any actions you want here, such as submitting the form data
+      console.log("Intensity:", intensity);
+    };
+
+    return (
+      <main className="flex min-h-screen items-stretch p-0 m-0 latin">
+        {/* Side Navigation Bar */}
+        <div className="h-screen flex flex-col items-center justify-start space-y-4 p-4 bg-gray-200 w-48"> {/* Increase width from 'w-40' to 'w-48' */}
+          <h2 className="text-xl font-bold text-black">NewWarden</h2>
+          <button
+            onClick={() => handleNavItemClick("stats")}
+            className={`w-full text-blue-500 px-4 py-2 rounded-md ${
+              selectedNavItem === "stats" ? "bg-blue-200" : ""
+            }`}
+          >
+            Stats
+          </button>
+          {/* Removed the "Add Child" button from here */}
+          <button
+            onClick={() => handleNavItemClick("settings")}
+            className={`w-full text-blue-500 px-4 py-2 rounded-md ${
+              selectedNavItem === "settings" ? "bg-blue-200" : ""
+            }`}
+          >
+            Settings
+          </button>
+          {/* Add more menu items as needed */}
+        </div>
 
       <div className="flex flex-col items-center justify-start flex-1 p-4">
         {/* Stats Section */}
@@ -173,10 +180,32 @@ export default function Home() {
                   name="intensity"
                   min={0}
                   max="100"
-                  defaultValue={40} // Use defaultValue instead of value
+                  value={intensity} // Use intensity state here
+                  onChange={handleIntensityChange} // Handle intensity change
                   className="range"
                 />
-                <div className="text-lg font-medium">40</div>
+                <div className="text-lg font-medium">{intensity}</div>
+
+                {/* Text Input */}
+                <label htmlFor="passcode" className="label">
+                  <span className="label-text">Change passcode</span>
+                </label>
+                <input
+                  type="password"
+                  id="passcode"
+                  placeholder=""
+                  className="input input-bordered w-full max-w-md"
+                  maxLength={6}
+                  pattern="\d*"
+                />
+
+                {/* Submit Button */}
+                <button
+                  onClick={handleSubmit} // Handle form submission
+                  className="btn btn-primary mt-4"
+                >
+                  Submit
+                </button>
               </div>
             </div>
           </div>
